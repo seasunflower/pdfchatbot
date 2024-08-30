@@ -22,3 +22,9 @@ Deactivate the environment at any time by running:
 deactivate
 ```
 After deactivation, the (myenv) prefix will disappear, returning you to the global Python environment.
+
+## How to run streamlit app
+
+``` 
+streamlit run app.py 
+```
