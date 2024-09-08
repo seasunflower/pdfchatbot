@@ -6,7 +6,7 @@ from langchain.embeddings import OpenAIEmbeddings
 from langchain.vectorstores import FAISS
 from langchain.chat_models import ChatOpenAI
 from langchain.memory import ConversationBufferMemory
-from langchain.chains import ConversationalRetrievalChain 
+from langchain.chains import ConversationalRetrievalChain
 
 def get_pdf_text(pdf_docs):
     text = ""
@@ -35,9 +35,9 @@ def get_conversation_chain(vectorstore):
     llm = ChatOpenAI()
     memory = ConversationBufferMemory(memory_key='chat_history', return_messages=True)
     conversation_chain = ConversationalRetrievalChain.from_llm(
-        llm = llm,
-        retriever = vectorstore.as_retriever(),
-        memory = memory
+        llm=llm,
+        retriever=vectorstore.as_retriever(),
+        memory=memory
     )
     return conversation_chain
 
@@ -63,8 +63,7 @@ def main():
                 vectorstore = get_vectorstore(text_chunks)
 
                 # create conversation chain
-                conversation = get_conversation_chain(vectorstore)
-                
+                conversation = get_conversation_chain(vectorstore)              
 
 if __name__ == '__main__':
     main()
