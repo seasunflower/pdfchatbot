@@ -28,6 +28,18 @@ def get_vectorstore(text_chunks):
     vectorstore = FAISS.from_texts(texts=text_chunks, embedding=embeddings)
     return vectorstore
 
+def get_conversation_chain(vectorstore):
+    llm = ChatOpenAI()
+
+    memory = ConversationBufferMemory(
+        memory_key='chat_history', return_messages=True)
+    conversation_chain = ConversationalRetrievalChain.from_llm(
+        llm=llm,
+        retriever=vectorstore.as_retriever(),
+        memory=memory
+    )
+    return conversation_chain
+
 def main():
     load_dotenv()
     st.set_page_config(page_title="Chat with multiple PDFs",
@@ -53,7 +65,11 @@ def main():
                 text_chunks = get_text_chunks(raw_text)
              
                 # create vector store
-                st.session_state.vectorstore = get_vectorstore(vectorstore)
+                vectorstore = get_vectorstore(text_chunks)
+
+                # create conversation chain
+                st.session_state.conversation = get_conversation_chain(vectorstore)
                 
+
 if __name__ == '__main__':
     main()
