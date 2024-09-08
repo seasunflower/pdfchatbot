@@ -32,6 +32,12 @@ def main():
     load_dotenv()
     st.set_page_config(page_title="Chat with multiple PDFs",
                        page_icon=":books:")
+    
+    if "conversation" not in st.session_state:
+        st.session_state.conversation = None
+    if "chat_history" not in st.session_state:
+        st.session_state.chat_history = None
+
     st.header("Chat with multiple PDFs :books:")
     st.text_input("Ask a question about your documents:")
     
@@ -47,8 +53,7 @@ def main():
                 text_chunks = get_text_chunks(raw_text)
              
                 # create vector store
-                vectorstore = get_vectorstore(text_chunks)
+                st.session_state.vectorstore = get_vectorstore(vectorstore)
                 
-
 if __name__ == '__main__':
     main()
